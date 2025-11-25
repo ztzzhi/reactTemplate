@@ -101,7 +101,7 @@ const DynamicBreadcrumb = ({ routes = allRoutes, homePath = '/', ...breadcrumbPr
 
   const breadcrumbItems = buildBreadcrumbData()
 
-  return <Breadcrumb items={breadcrumbItems} className="breadcrumb" {...breadcrumbProps} />
+  return <Breadcrumb items={breadcrumbItems} className="breadcrumb_container" {...breadcrumbProps} />
 }
 
 export default DynamicBreadcrumb
