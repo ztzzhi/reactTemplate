@@ -1,0 +1,103 @@
+.qsf_search_form_wrap {
+  padding: 20px 0 12px;
+  background-color: var(--color-bg-1);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  .qsf_search_form_wrap_formbox {
+    border-bottom: 1px solid var(--color-border-2);
+    padding: 0 12px;
+    padding-bottom: 20px;
+  }
+  .qsf_search_form_extra_wrap {
+    padding: 0 12px;
+    .table_extra_flex button {
+      margin-top: 12px;
+    }
+    .table_extra_flex .ant-checkbox-group {
+      margin-top: 18px;
+      margin-bottom: 4px;
+    }
+  }
+  .ant-space-compact {
+    .ant-form-item {
+      margin-inline-end: 0px;
+    }
+  }
+  .ant-form-item-control-input {
+    .ant-picker {
+      width: 100%;
+    }
+  }
+  .ant-form-item-control-input-content {
+    max-width: 100%;
+    width: 0;
+  }
+  .ant-form-item-label {
+    min-width: 80px;
+  }
+}
+
+.qsf_form_edit_wrap {
+  width: 100%;
+  .footer_btm_cls {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    padding: 7px 24px;
+    background: var(--color-bg-1);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    transition: width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1) 0s;
+  }
+  .ant-form-item-control-input-content {
+    font-weight: normal !important;
+  }
+  .ant-form-item-label label {
+    color: var(--color-text-4);
+    font-weight: normal;
+    font-size: 14px;
+  }
+}
+
+.qsf_form_edit_inline_wrap {
+  width: 100%;
+  .warning_required_flag {
+    .ant-form-item-label {
+      label::before {
+        display: inline-block;
+        margin-inline-end: 4px;
+        color: var(--primary-color);
+        font-size: 14px;
+        font-family: SimSun, sans-serif;
+        line-height: 1;
+        content: '*';
+      }
+    }
+  }
+  .footer_btm_cls {
+    position: fixed;
+    z-index: 99;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    padding: 7px 24px;
+    background: var(--color-bg-1);
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    transition: width 0.3s cubic-bezier(0.645, 0.045, 0.355, 1) 0s;
+  }
+  .ant-form-item-control-input-content {
+    font-weight: normal !important;
+  }
+  .ant-form-item-label label {
+    color: var(--color-text-4);
+    font-weight: normal;
+    font-size: 14px;
+  }
+}

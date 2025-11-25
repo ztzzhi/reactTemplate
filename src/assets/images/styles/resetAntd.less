@@ -1,0 +1,110 @@
+/* antd Tabs Reset */
+.ant-tabs-nav {
+  background-color: var(--color-bg-1);
+  color: rgba(0, 0, 0, 0.88);
+  box-sizing: border-box;
+  padding-left: 12px;
+  margin-bottom: 0 !important;
+}
+
+.ant-tabs .ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: var(--primary-color);
+}
+
+.ant-tabs .ant-tabs-ink-bar {
+  background: var(--primary-color);
+}
+
+/* antd Modal Reset */
+
+.ant-modal .ant-modal-content {
+  padding: 0;
+
+  .ant-modal-close {
+    top: 5px;
+    right: 8px;
+  }
+
+  .ant-modal-header {
+    height: 44px;
+    text-align: center;
+    background: #fff;
+    .ant-modal-title {
+      height: 100%;
+      line-height: 44px;
+      color: #333;
+      border-bottom: 1px solid var(--color-border-2);
+    }
+  }
+
+  .ant-modal-body {
+    padding: 10px 24px;
+  }
+  .ant-modal-footer {
+    box-sizing: border-box;
+    border-top: 1px solid var(--color-border-2);
+    padding: 10px;
+  }
+}
+
+//qsf_custom_table_wrap
+.qsf_custom_table_wrap {
+  background-color: var(--color-bg-1);
+  display: flex;
+  flex-direction: column;
+  padding: 0 12px 12px;
+  .ant-table-wrapper .ant-table-thead > tr > th {
+    background-color: var(--color-bg-2);
+  }
+  .custom_table_stripe {
+    background-color: #f6f6f6;
+    .ant-table-cell-fix-left,
+    .ant-table-cell-fix-right {
+      background-color: #f6f6f6;
+    }
+  }
+  .ant-pagination {
+    display: block;
+  }
+  .ant-table-wrapper {
+    .ant-table-body {
+      .ant-table-tbody {
+        tr {
+          td:last-child {
+            border-right: none;
+          }
+        }
+      }
+    }
+  }
+  .ant-typography {
+    margin-bottom: 0;
+  }
+  // 取消状态置灰
+  .table-row-gray .ant-table-cell {
+    color: #bbb !important;
+    div {
+      color: #bbb !important;
+    }
+    span {
+      color: #bbb !important;
+    }
+    a {
+      color: #bbb !important;
+    }
+    .ant-badge-color-volcano {
+      background-color: #bbb !important;
+    }
+    * {
+      color: #bbb !important;
+    }
+  }
+}
+
+.qsf_custom_table_bgc_grey {
+  background-color: #f6f6f6;
+  .ant-table-cell-fix-left,
+  .ant-table-cell-fix-right {
+    background-color: #f6f6f6;
+  }
+}

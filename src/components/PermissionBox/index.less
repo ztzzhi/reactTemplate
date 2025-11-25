@@ -1,0 +1,186 @@
+@primary: var(--primary-color);
+@border: #f0f0f0;
+@header-bg: #fafbfc;
+@row-bg: #fff;
+@text-main: #222;
+@text-sub: #444;
+@text-light: #666;
+
+.permission-demo-container {
+  display: flex;
+  height: 100%;
+  background: #f7f8fa;
+  border-radius: 12px;
+  box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  border: none;
+}
+.permission-demo-menu {
+  width: 220px;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  .menu-title {
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-weight: 700;
+    font-size: 20px;
+    letter-spacing: 2px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .menu-item {
+    padding: 10px 24px;
+    cursor: pointer;
+    border-radius: 8px;
+    margin: 4px 12px;
+    font-weight: 500;
+    transition: all 0.2s;
+    color: @text-main;
+    font-size: 14px;
+    line-height: 1.4;
+    word-break: break-all;
+    &.active {
+      background: #e6f7ff;
+      color: @primary;
+      font-weight: 600;
+    }
+    &:hover {
+      background: #f5f5f5;
+    }
+    // 嵌套层级样式
+    &.level-1 {
+      padding-left: 32px;
+      font-size: 13px;
+      color: @text-sub;
+    }
+    &.level-2 {
+      padding-left: 40px;
+      font-size: 12px;
+      color: @text-light;
+    }
+  }
+}
+.permission-demo-table {
+  flex: 1;
+  position: relative;
+  border-left: 1px solid @border;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  .table-outer {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+}
+.permission-demo-table-header {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid @border;
+  background: @header-bg;
+  font-weight: 600;
+  font-size: 15px;
+  height: 56px;
+  color: #666;
+  letter-spacing: 1px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  flex-shrink: 0;
+  .header-group-name {
+    width: 180px;
+    padding: 0 0 0 24px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .header-permissions {
+    flex: 1;
+    padding: 0 0 0 16px;
+    display: flex;
+    align-items: center;
+  }
+  .header-checkbox-all {
+    width: 80px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    flex-shrink: 0;
+  }
+}
+.permission-demo-table-body {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.permission-demo-table-row {
+  display: flex;
+  align-items: stretch;
+  border-bottom: 1px solid @border;
+  min-height: 56px;
+  padding: 0;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .permission-demo-group-name {
+    width: 180px;
+    padding: 16px 0 16px 24px;
+    font-weight: 700;
+    color: @text-main;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    line-height: 1.4;
+    align-items: flex-start;
+  }
+
+  .permission-demo-permissions {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 16px 16px 16px 16px;
+    min-height: 56px;
+
+    .ant-checkbox-group {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px 24px;
+      align-items: center;
+      justify-content: flex-start;
+    }
+  }
+
+  .permission-demo-checkbox-item {
+    min-width: 120px;
+    font-size: 14px;
+    white-space: nowrap;
+    line-height: 1.4;
+
+    .ant-checkbox {
+      font-weight: 500;
+      font-size: 14px;
+    }
+  }
+
+  .permission-demo-checkbox-all {
+    width: 80px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 0;
+    flex-shrink: 0;
+    align-items: flex-start;
+  }
+}

@@ -1,0 +1,53 @@
+/* 主题系统 - CSS 变量定义 */
+:root {
+  /* 浅色主题变量 */
+  --bg-color: #ffffff;
+  --bg-color-secondary: #fafafa;
+  --bg-color-container: #ffffff;
+  --text-color: #000000d9;
+  --text-color-secondary: #00000073;
+  --text-color-tertiary: #00000040;
+  --border-color: #d9d9d9;
+  --border-color-split: #f0f0f0;
+  --header-bg: #ffffff;
+  --header-border: #f0f0f0;
+  --sidebar-bg: #ffffff;
+  --sidebar-hover: rgba(0, 0, 0, 0.04);
+  --sidebar-active: #e6f7ff;
+  --sidebar-selected: #1890ff;
+  --logo-bg: rgba(255, 255, 255, 0.1);
+  --shadow-1: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+  --shadow-2: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+  --shadow-3: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* 暗色主题变量 */
+html[theme='dark'] {
+  --bg-color: #141414;
+  --bg-color-secondary: #1f1f1f;
+  --bg-color-container: #1f1f1f;
+  --text-color: #ffffffd9;
+  --text-color-secondary: #ffffff73;
+  --text-color-tertiary: #ffffff40;
+  --border-color: #434343;
+  --border-color-split: #303030;
+  --header-bg: #1f1f1f;
+  --header-border: #303030;
+  --sidebar-bg: #1f1f1f;
+  --sidebar-hover: rgba(255, 255, 255, 0.08);
+  --sidebar-active: rgba(24, 144, 255, 0.15);
+  --sidebar-selected: #1890ff;
+  --logo-bg: rgba(255, 255, 255, 0.1);
+  --shadow-1: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+  --shadow-2: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+  --shadow-3: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* 全局主题应用 */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition:
+    background-color 0.3s,
+    color 0.3s;
+}

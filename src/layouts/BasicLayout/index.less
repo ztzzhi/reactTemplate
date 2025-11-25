@@ -1,0 +1,32 @@
+.basic-layout {
+  min-height: 100vh;
+  background: var(--bg-color);
+
+  .site-layout {
+    margin-left: 230px;
+    transition: all 0.2s;
+    background: var(--bg-color);
+    padding-top: 64px;
+
+    &.collapsed {
+      margin-left: 80px;
+    }
+  }
+
+  .site-layout-content {
+    margin: 12px;
+    padding: 12px;
+    min-height: calc(100vh - 64px - 32px);
+    background: var(--bg-color-container);
+    border: 1px solid var(--border-color-split);
+    border-radius: 8px;
+    transition:
+      background-color 0.3s,
+      border-color 0.3s;
+
+    .content-wrapper {
+      min-height: 100%;
+      color: var(--text-color);
+    }
+  }
+}
