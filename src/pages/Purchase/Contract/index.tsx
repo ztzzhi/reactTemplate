@@ -94,7 +94,7 @@ const ContractList = () => {
       title: '操作',
       key: 'action',
       width: 200,
-      render: (_, record) => (
+      render: (_, __) => (
         <Space size="small">
           <Button type="link" size="small">
             查看

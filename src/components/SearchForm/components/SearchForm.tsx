@@ -7,7 +7,6 @@ import { ConfigProvider } from 'antd'
 import zhCN from 'antd/es/locale/zh_CN'
 import { ISearchProps, IItemArray } from './types'
 import './index.less'
-import React from 'react'
 export default function SearchForm(props: ISearchProps) {
   const [form] = useForm()
   const slicedNum = 2

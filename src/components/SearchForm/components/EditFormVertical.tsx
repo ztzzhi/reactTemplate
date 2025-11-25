@@ -3,7 +3,6 @@ import './index.less'
 import { Fragment } from 'react'
 import { IEditProps } from './types'
 import getComponents from './ComponentType'
-import React from 'react'
 export default function EditFormVertical(props: IEditProps) {
   return (
     <div className={`qsf_form_edit_wrap${props.className ? ' ' + props.className : ''}`}>

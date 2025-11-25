@@ -3,7 +3,6 @@ import './index.less'
 import { Fragment } from 'react'
 import getComponents from './ComponentType'
 import { IEditProps } from './types'
-import React from 'react'
 const grid = { xs: 24, sm: 24, md: 12, lg: 8, xl: 8, xxl: 6 }
 export default function EditFormInline(props: IEditProps) {
   return (

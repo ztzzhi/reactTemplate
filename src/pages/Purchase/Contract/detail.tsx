@@ -1,8 +1,7 @@
 import { Card, Descriptions, Button, Space, Tag, Timeline } from 'antd'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const ContractDetail = () => {
-  const { id } = useParams()
   const navigate = useNavigate()
 
   // Mock 数据

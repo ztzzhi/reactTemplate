@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import { Card, Button, Space, message, Alert, Descriptions, Tag } from 'antd'
+import { Card, message } from 'antd'
 import { useAppSelector } from '@/store/hooks'
 import PermissionBox from '@/components/PermissionBox'
-import { USER_ROLES, getUserPermissions, getUserRole } from '@/config/permissions'
+import { getUserPermissions } from '@/config/permissions'
 
 const PermissionTest = () => {
   const { userInfo } = useAppSelector((state) => state.user)
@@ -21,20 +21,6 @@ const PermissionTest = () => {
   const handlePermissionChange = (permissions: string[]) => {
     setCurrentPermissions(permissions)
     message.success(`权限已更新，当前拥有 ${permissions.length} 个权限`)
-  }
-
-  const switchUser = (username: string) => {
-    const userRole = getUserRole(username)
-    if (userRole) {
-      setCurrentUser(username)
-      const permissions = getUserPermissions(username)
-      setCurrentPermissions(permissions)
-      message.success(`已切换到 ${userRole.name} (${userRole.role})`)
-    }
-  }
-
-  const checkPermission = (permission: string) => {
-    return currentPermissions.includes(permission)
   }
 
   return (

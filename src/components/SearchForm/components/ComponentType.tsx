@@ -14,7 +14,6 @@ import {
 } from 'antd'
 import FixedRangePicker from './FixedRangePicker'
 import FixedDatePicker from './FixedDatePicker'
-import React from 'react'
 import { IItemArray } from './types'
 export default function getComponents(item: IItemArray, isPass?: () => void, isAutoFocus?: boolean): ReactNode {
   const ComponentType: { [key: string]: ReactNode } = {
