@@ -23,7 +23,7 @@ export default function getComponents(item: IItemArray, isPass?: () => void, isA
         autoClearSearchValue
         showSearch
         treeNodeFilterProp="label"
-        treeData={item.option}
+        treeData={item?.options}
         treeLine
         placeholder={item.placeholder || `请选择${item.label}`}
         {...item.config}
@@ -59,7 +59,7 @@ export default function getComponents(item: IItemArray, isPass?: () => void, isA
       <Select
         allowClear
         placeholder={item.placeholder || `请选择${item.label}`}
-        options={item?.option}
+        options={item?.options}
         autoFocus={isAutoFocus}
         {...item.config}
       />
@@ -67,7 +67,7 @@ export default function getComponents(item: IItemArray, isPass?: () => void, isA
     AutoComplete: (
       <AutoComplete
         placeholder={item.placeholder || `请选择${item.label}`}
-        options={item?.option}
+        options={item?.options}
         allowClear
         autoFocus={isAutoFocus}
       ></AutoComplete>
@@ -80,12 +80,12 @@ export default function getComponents(item: IItemArray, isPass?: () => void, isA
     FixedRangePicker: <FixedRangePicker {...item.config} />,
     FixedDatePicker: <FixedDatePicker {...item.config} />,
     Cascader: (
-      <Cascader placeholder={item.placeholder || `请选择${item.label}`} {...item.config} options={item?.option} />
+      <Cascader placeholder={item.placeholder || `请选择${item.label}`} {...item.config} options={item?.options} />
     ),
-    Checkbox: <Checkbox.Group options={item?.option} {...item.config}></Checkbox.Group>,
+    Checkbox: <Checkbox.Group options={item?.options} {...item.config}></Checkbox.Group>,
     Radio: (
       <Radio.Group {...item.config}>
-        {item.option?.map((item: any, index: number) => {
+        {item?.options?.map((item: any, index: number) => {
           return (
             <Radio value={item.value} key={index}>
               {item.label}

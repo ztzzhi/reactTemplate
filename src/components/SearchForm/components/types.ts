@@ -5,7 +5,7 @@ export interface IItemArray {
   name?: string
   label: string | number
   type: IType
-  option?: IOption[]
+  options?: IOption[]
   config?: any
   valuePropName?: string //比如switch使用的是checked而不是value控制的状态 这时我们可以通过valuePropName把状态绑定到对应的属性上
   checked?: boolean
