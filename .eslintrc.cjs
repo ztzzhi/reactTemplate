@@ -37,5 +37,7 @@ module.exports = {
     'react/prop-types': 'off',
     '@typescript-eslint/no-empty-function': 'off',
     'no-debugger': 'warn',
+    'react/display-name': 'off',
+    'react-hooks/exhaustive-deps': 'off',
   },
 }

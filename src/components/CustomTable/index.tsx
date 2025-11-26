@@ -58,15 +58,15 @@ export default function CustomTable(props: CustomTableProps) {
         }}
         pagination={false}
         rowHoverable={false}
-        rowClassName={(record, index) => {
-          return tableRowGray && typeof tableRowGray === 'function'
-            ? tableRowGray(record)
-            : stripe != false
-              ? index % 2 === 0
-                ? ''
-                : 'custom_table_stripe'
-              : ''
-        }}
+        // rowClassName={(record, index) => {
+        //   return tableRowGray && typeof tableRowGray === 'function'
+        //     ? tableRowGray(record)
+        //     : stripe != false
+        //       ? index % 2 === 0
+        //         ? ''
+        //         : 'custom_table_stripe'
+        //       : ''
+        // }}
         bordered={props?.bordered !== false}
         rowSelection={rowSelection ? (mergedRowSelection as TableRowSelection<any>) : undefined}
       />

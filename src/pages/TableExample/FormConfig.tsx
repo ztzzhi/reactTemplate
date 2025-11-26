@@ -55,3 +55,82 @@ export const searchConfig = (): IItemArray[] => {
     },
   ]
 }
+
+export const editFormConfig = (): IItemArray[] => {
+  return [
+    {
+      label: '姓名',
+      name: 'name',
+      type: 'Input' as const,
+      placeholder: '请输入姓名',
+      rules: [
+        {
+          required: true,
+          message: '请输入姓名',
+        },
+      ],
+    },
+    {
+      label: '年龄',
+      name: 'age',
+      type: 'InputNumber' as const,
+      placeholder: '请输入年龄',
+      config: {
+        min: 1,
+        max: 150,
+      },
+      rules: [
+        {
+          required: true,
+          message: '请输入年龄',
+        },
+      ],
+    },
+    {
+      label: '地址',
+      name: 'address',
+      type: 'Input' as const,
+      placeholder: '请输入地址',
+      rules: [
+        {
+          required: true,
+          message: '请输入地址',
+        },
+      ],
+    },
+    {
+      label: '邮箱',
+      name: 'email',
+      type: 'Input' as const,
+      placeholder: '请输入邮箱',
+      rules: [
+        {
+          type: 'email',
+          message: '请输入正确的邮箱格式',
+        },
+      ],
+    },
+    {
+      label: '电话',
+      name: 'phone',
+      type: 'Input' as const,
+      placeholder: '请输入电话',
+    },
+    {
+      label: '状态',
+      name: 'status',
+      type: 'Select' as const,
+      placeholder: '请选择状态',
+      options: [
+        { label: '启用', value: 1 },
+        { label: '禁用', value: 0 },
+      ],
+      rules: [
+        {
+          required: true,
+          message: '请选择状态',
+        },
+      ],
+    },
+  ]
+}

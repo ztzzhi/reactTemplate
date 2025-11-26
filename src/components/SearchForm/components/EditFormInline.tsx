@@ -3,8 +3,8 @@ import './index.less'
 import { Fragment } from 'react'
 import getComponents from './ComponentType'
 import { IEditProps } from './types'
-const grid = { xs: 24, sm: 24, md: 12, lg: 8, xl: 8, xxl: 6 }
 export default function EditFormInline(props: IEditProps) {
+  const { column = 3 } = props
   return (
     <div className={`custom_form_edit_inline_wrap${props.className ? ' ' + props.className : ''}`}>
       <Form
@@ -24,7 +24,7 @@ export default function EditFormInline(props: IEditProps) {
               return null
             }
             return (
-              <Col {...grid} key={index}>
+              <Col {...{ xs: 24, sm: 24, md: 12, lg: 24 / column, xl: 24 / column, xxl: 24 / column }} key={index}>
                 <Fragment>
                   <Form.Item {...item} className={warning_flag ? 'warning_required_flag' : ''}>
                     {item ? getComponents(item) : null}

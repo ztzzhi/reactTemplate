@@ -48,6 +48,7 @@ export interface IEditProps {
   onValuesChange?: (...set: any) => void
   header?: React.ReactNode
   children?: React.ReactNode
+  column?: number
 }
 export type IType =
   | 'Custom'

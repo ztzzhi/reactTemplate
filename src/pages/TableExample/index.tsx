@@ -1,15 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useMemo, useCallback } from 'react'
 import { useForm } from 'antd/es/form/Form'
-import { message, Modal, Space, Button } from 'antd'
+import { message, Modal } from 'antd'
 import { PlusOutlined, ExportOutlined } from '@ant-design/icons'
 import PageContainer from '@/components/PageContainer'
-import { SearchForm, EditFormVertical } from '@/components/SearchForm/components'
+import { SearchForm } from '@/components/SearchForm/components'
 import CustomTable from '@/components/CustomTable'
 import PermissionButton from '@/components/PermissionButton'
 import useGetTableData from '@/hooks/useGetTableData'
 import useCachePage from '@/hooks/useCachePage'
-import useModal from '@/hooks/useModal'
-import { searchConfig } from './FormConfig'
+import useModalForm from '@/hooks/useModalForm'
+import { searchConfig, editFormConfig } from './FormConfig'
 import { useTableColumns } from './TableColumns'
 import { getUserList, deleteUser, updateUserStatus } from './api'
 import { UserData } from './types'
@@ -34,12 +34,6 @@ const TableExample: React.FC = () => {
     },
     paramsCallback: (requestParams) => {
       const { createTimeStart, ...restParams } = requestParams
-      console.log({
-        ...restParams,
-        createTimeEnd: createTimeStart && createTimeStart.length === 2 ? createTimeStart[1] : undefined,
-        createTimeStart: createTimeStart && createTimeStart.length === 2 ? createTimeStart[0] : undefined,
-      })
-
       return {
         ...restParams,
         createTimeEnd: createTimeStart && createTimeStart.length === 2 ? createTimeStart[1] : undefined,
@@ -48,7 +42,11 @@ const TableExample: React.FC = () => {
     },
   })
 
-  // 处理缓存数据
+  // 缓存配置，避免每次渲染都创建新对象
+  const editConfig = useMemo(() => editFormConfig(), [])
+  const searchConfigMemo = useMemo(() => searchConfig(), [])
+
+  // 初始化 - 处理缓存数据
   const handleCacheData = async () => {
     const cacheData = getCachePage()
     if (cacheData == null) {
@@ -66,19 +64,35 @@ const TableExample: React.FC = () => {
     }
   }
 
-  // 初始化
   useEffect(() => {
     handleCacheData()
   }, [])
 
-  // 编辑/新增Modal
-  const EditModal = useModal<UserData>({
+  // 表单配置
+
+  // 编辑/新增Modal - 使用新的 useModalForm
+  const EditModal = useModalForm<UserData>({
+    title: (record) => (record ? '编辑用户' : '新增用户'),
+    width: 800,
+    column: 2,
+    formConfig: editConfig,
+    onSubmit: async (_values) => {
+      // 这里写实际的保存请求，返回Promise
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            code: 200,
+            msg: '保存成功',
+          })
+        }, 500)
+      })
+    },
     onSuccess: () => {
       message.success('操作成功')
       reload()
     },
     onFail: () => {
-      console.log('操作失败')
+      message.error('操作失败')
     },
     onReload: () => {
       reload()
@@ -201,21 +215,6 @@ const TableExample: React.FC = () => {
     EditModal.openModal()
   }
 
-  // 保存编辑/新增
-  const handleSave = () => {
-    EditModal.handleSubmit(async (values) => {
-      // 这里写实际的保存请求，返回Promise
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve({
-            code: 200,
-            message: '保存成功',
-          })
-        }, 500)
-      })
-    })
-  }
-
   const columns = useTableColumns({
     onView: handleView,
     onEdit: handleEdit,
@@ -228,7 +227,7 @@ const TableExample: React.FC = () => {
       <SearchForm
         loading={tableProps.loading}
         form={form}
-        searchConfig={searchConfig()}
+        searchConfig={searchConfigMemo}
         onFinish={async () => {
           setCachePage({
             ...form.getFieldsValue(),
@@ -282,100 +281,8 @@ const TableExample: React.FC = () => {
           },
         }}
       />
-      {/* 编辑/新增Modal */}
-      <Modal
-        title={EditModal.currentRecord ? '编辑用户' : '新增用户'}
-        open={EditModal.open}
-        onCancel={EditModal.closeModal}
-        footer={
-          <Space>
-            <Button onClick={EditModal.closeModal}>取消</Button>
-            <Button type="primary" onClick={handleSave} loading={EditModal.confirmLoading}>
-              确定
-            </Button>
-          </Space>
-        }
-      >
-        <EditFormVertical
-          form={EditModal.form}
-          editConfig={[
-            {
-              label: '姓名',
-              name: 'name',
-              type: 'Input',
-              placeholder: '请输入姓名',
-              rules: [
-                {
-                  required: true,
-                  message: '请输入姓名',
-                },
-              ],
-            },
-            {
-              label: '年龄',
-              name: 'age',
-              type: 'InputNumber',
-              placeholder: '请输入年龄',
-              config: {
-                min: 1,
-                max: 150,
-              },
-              rules: [
-                {
-                  required: true,
-                  message: '请输入年龄',
-                },
-              ],
-            },
-            {
-              label: '地址',
-              name: 'address',
-              type: 'Input',
-              placeholder: '请输入地址',
-              rules: [
-                {
-                  required: true,
-                  message: '请输入地址',
-                },
-              ],
-            },
-            {
-              label: '邮箱',
-              name: 'email',
-              type: 'Input',
-              placeholder: '请输入邮箱',
-              rules: [
-                {
-                  type: 'email',
-                  message: '请输入正确的邮箱格式',
-                },
-              ],
-            },
-            {
-              label: '电话',
-              name: 'phone',
-              type: 'Input',
-              placeholder: '请输入电话',
-            },
-            {
-              label: '状态',
-              name: 'status',
-              type: 'Select',
-              placeholder: '请选择状态',
-              option: [
-                { label: '启用', value: 1 },
-                { label: '禁用', value: 0 },
-              ],
-              rules: [
-                {
-                  required: true,
-                  message: '请选择状态',
-                },
-              ],
-            },
-          ]}
-        />
-      </Modal>
+      {/* 编辑/新增Modal*/}
+      {EditModal.ModalForm}
     </PageContainer>
   )
 }
