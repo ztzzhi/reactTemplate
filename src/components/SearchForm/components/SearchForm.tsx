@@ -65,10 +65,7 @@ export default function SearchForm(props: ISearchProps) {
     <ConfigProvider
       locale={zhCN}
       theme={{
-        token: {
-          colorPrimary: '#42bac3',
-          colorLink: '#42bac3',
-        },
+        token: {},
         components: {
           Menu: {
             itemBorderRadius: 0,

@@ -23,6 +23,13 @@ export const mockUserPermissions = [
 
   // 示例页面
   'examples:table:view',
+  'examples:table:create',
+  'examples:table:edit',
+  'examples:table:delete',
+  'examples:table:status',
+  'examples:table:batchDelete',
+  'examples:table:export',
+  'examples:table:viewinfo',
   'examples:form:view',
   'examples:charts:view',
 

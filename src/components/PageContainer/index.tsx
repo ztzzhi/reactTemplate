@@ -1,6 +1,5 @@
 import React from 'react'
 import './index.less'
-import BreadCrumb from '../BreadCrumb'
 interface Iprops {
   children?: React.ReactNode
   title?: string | React.ReactNode

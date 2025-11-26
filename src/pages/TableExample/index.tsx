@@ -1,121 +1,382 @@
-import { useState } from 'react'
-import { Table, Button, Space, Tag, Input } from 'antd'
-import { SearchOutlined, PlusOutlined } from '@ant-design/icons'
-import type { ColumnsType } from 'antd/es/table'
+import React, { useEffect, useState } from 'react'
+import { useForm } from 'antd/es/form/Form'
+import { message, Modal, Space, Button } from 'antd'
+import { PlusOutlined, ExportOutlined } from '@ant-design/icons'
+import PageContainer from '@/components/PageContainer'
+import { SearchForm, EditFormVertical } from '@/components/SearchForm/components'
+import CustomTable from '@/components/CustomTable'
+import PermissionButton from '@/components/PermissionButton'
+import useGetTableData from '@/hooks/useGetTableData'
+import useCachePage from '@/hooks/useCachePage'
+import useModal from '@/hooks/useModal'
+import { searchConfig } from './FormConfig'
+import { useTableColumns } from './TableColumns'
+import { getUserList, deleteUser, updateUserStatus } from './api'
+import { UserData } from './types'
+import './index.less'
 
-interface DataType {
-  key: string
-  name: string
-  age: number
-  address: string
-  tags: string[]
-}
+const TableExample: React.FC = () => {
+  const [form] = useForm()
+  const { setCachePage, getCachePage } = useCachePage()
+  const [selectedRowKeys, setSelectedRowKeys] = useState<string[]>([])
 
-const TableExample = () => {
-  const [searchText, setSearchText] = useState('')
+  // 使用useGetTableData hook
+  const { tableProps, params, search, reset, reload } = useGetTableData<UserData>(getUserList, {
+    form: form,
+    immediatelySend: false,
+    cachePageCallback: (current, size, prevSize) => {
+      const cacheData = getCachePage()
+      setCachePage({
+        ...cacheData,
+        current: prevSize === size ? current : 1,
+        size,
+      })
+    },
+    paramsCallback: (requestParams) => {
+      const { createTimeStart, ...restParams } = requestParams
+      console.log({
+        ...restParams,
+        createTimeEnd: createTimeStart && createTimeStart.length === 2 ? createTimeStart[1] : undefined,
+        createTimeStart: createTimeStart && createTimeStart.length === 2 ? createTimeStart[0] : undefined,
+      })
 
-  const columns: ColumnsType<DataType> = [
-    {
-      title: '姓名',
-      dataIndex: 'name',
-      key: 'name',
-      filteredValue: searchText ? [searchText] : null,
-      onFilter: (value, record) => record.name.toLowerCase().includes(value.toString().toLowerCase()),
+      return {
+        ...restParams,
+        createTimeEnd: createTimeStart && createTimeStart.length === 2 ? createTimeStart[1] : undefined,
+        createTimeStart: createTimeStart && createTimeStart.length === 2 ? createTimeStart[0] : undefined,
+      }
     },
-    {
-      title: '年龄',
-      dataIndex: 'age',
-      key: 'age',
-      sorter: (a, b) => a.age - b.age,
+  })
+
+  // 处理缓存数据
+  const handleCacheData = async () => {
+    const cacheData = getCachePage()
+    if (cacheData == null) {
+      await form.validateFields()
+      search()
+      setCachePage({ ...params })
+    } else {
+      const { ...resetCacheData } = cacheData
+      // 先重置表单再设置缓存
+      form.resetFields()
+      form.setFieldsValue({
+        ...resetCacheData,
+      })
+      reload({ ...resetCacheData })
+    }
+  }
+
+  // 初始化
+  useEffect(() => {
+    handleCacheData()
+  }, [])
+
+  // 编辑/新增Modal
+  const EditModal = useModal<UserData>({
+    onSuccess: () => {
+      message.success('操作成功')
+      reload()
     },
-    {
-      title: '地址',
-      dataIndex: 'address',
-      key: 'address',
+    onFail: () => {
+      console.log('操作失败')
     },
-    {
-      title: '标签',
-      key: 'tags',
-      dataIndex: 'tags',
-      render: (tags: string[]) => (
-        <>
-          {tags.map((tag) => {
-            const color = tag === '管理员' ? 'red' : tag === 'VIP' ? 'gold' : 'blue'
-            return (
-              <Tag color={color} key={tag}>
-                {tag}
-              </Tag>
-            )
-          })}
-        </>
+    onReload: () => {
+      reload()
+    },
+  })
+
+  // 查看
+  const handleView = (record: UserData) => {
+    Modal.info({
+      title: '用户详情',
+      width: 600,
+      content: (
+        <div style={{ marginTop: 16 }}>
+          <p>
+            <strong>姓名：</strong>
+            {record.name}
+          </p>
+          <p>
+            <strong>年龄：</strong>
+            {record.age}
+          </p>
+          <p>
+            <strong>地址：</strong>
+            {record.address}
+          </p>
+          <p>
+            <strong>邮箱：</strong>
+            {record.email || '-'}
+          </p>
+          <p>
+            <strong>电话：</strong>
+            {record.phone || '-'}
+          </p>
+          <p>
+            <strong>标签：</strong>
+            {record.tags.join(', ')}
+          </p>
+          <p>
+            <strong>状态：</strong>
+            {record.status === 1 ? '启用' : '禁用'}
+          </p>
+          <p>
+            <strong>创建时间：</strong>
+            {record.createTime || '-'}
+          </p>
+        </div>
       ),
-    },
-    {
-      title: '操作',
-      key: 'action',
-      render: () => (
-        <Space size="middle">
-          <Button type="link" size="small">
-            编辑
-          </Button>
-          <Button type="link" size="small" danger>
-            删除
-          </Button>
-        </Space>
-      ),
-    },
-  ]
+    })
+  }
 
-  const data: DataType[] = [
-    {
-      key: '1',
-      name: '张三',
-      age: 32,
-      address: '北京市朝阳区',
-      tags: ['管理员', 'VIP'],
-    },
-    {
-      key: '2',
-      name: '李四',
-      age: 42,
-      address: '上海市浦东新区',
-      tags: ['VIP'],
-    },
-    {
-      key: '3',
-      name: '王五',
-      age: 28,
-      address: '广州市天河区',
-      tags: ['普通用户'],
-    },
-    {
-      key: '4',
-      name: '赵六',
-      age: 35,
-      address: '深圳市南山区',
-      tags: ['VIP'],
-    },
-  ]
+  // 编辑
+  const handleEdit = (record: UserData) => {
+    EditModal.openModal(record)
+  }
+
+  // 删除
+  const handleDelete = async (record: UserData) => {
+    try {
+      const response = await deleteUser(record.id)
+      if (response.code === 200) {
+        message.success('删除成功')
+        reload()
+      } else {
+        message.error(response.msg || '删除失败')
+      }
+    } catch (error) {
+      console.error('删除失败:', error)
+      message.error('删除失败')
+    }
+  }
+
+  // 状态变更
+  const handleStatusChange = async (record: UserData, newStatus: number) => {
+    try {
+      const response = await updateUserStatus(record.id, newStatus)
+      if (response.code === 200) {
+        message.success('操作成功')
+        reload()
+      } else {
+        message.error(response.msg || '操作失败')
+      }
+    } catch (error) {
+      console.error('操作失败:', error)
+      message.error('操作失败')
+    }
+  }
+
+  // 批量删除
+  const handleBatchDelete = () => {
+    if (selectedRowKeys.length === 0) {
+      message.warning('请先选择要删除的记录')
+      return
+    }
+    Modal.confirm({
+      title: '确认删除',
+      content: `确定要删除选中的 ${selectedRowKeys.length} 条记录吗？`,
+      onOk: async () => {
+        try {
+          // 模拟批量删除
+          await Promise.all(selectedRowKeys.map((id) => deleteUser(id)))
+          message.success('批量删除成功')
+          setSelectedRowKeys([])
+          reload()
+        } catch (error) {
+          console.error('批量删除失败:', error)
+          message.error('批量删除失败')
+        }
+      },
+    })
+  }
+
+  // 导出
+  const handleExport = () => {
+    message.info('导出功能开发中...')
+    // 这里可以实现导出逻辑
+  }
+
+  // 新增
+  const handleAdd = () => {
+    EditModal.openModal()
+  }
+
+  // 保存编辑/新增
+  const handleSave = () => {
+    EditModal.handleSubmit(async (values) => {
+      // 这里写实际的保存请求，返回Promise
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve({
+            code: 200,
+            message: '保存成功',
+          })
+        }, 500)
+      })
+    })
+  }
+
+  const columns = useTableColumns({
+    onView: handleView,
+    onEdit: handleEdit,
+    onDelete: handleDelete,
+    onStatusChange: handleStatusChange,
+  })
 
   return (
-    <div>
-      <h1 style={{ marginBottom: 24 }}>表格示例</h1>
-
-      <Space style={{ marginBottom: 16 }}>
-        <Input
-          placeholder="搜索姓名"
-          prefix={<SearchOutlined />}
-          value={searchText}
-          onChange={(e) => setSearchText(e.target.value)}
-          style={{ width: 200 }}
+    <PageContainer className="table_example_wrap">
+      <SearchForm
+        loading={tableProps.loading}
+        form={form}
+        searchConfig={searchConfig()}
+        onFinish={async () => {
+          setCachePage({
+            ...form.getFieldsValue(),
+            current: 1,
+            size: params.size,
+          })
+          search()
+        }}
+        onReset={() => {
+          reset()
+          setCachePage({
+            current: 1,
+            size: 10,
+          })
+        }}
+        extra={
+          <div className="table_extra_flex_wrapbox">
+            <div className="table_extra_flex">
+              <PermissionButton
+                permission="examples:table:create"
+                type="primary"
+                icon={<PlusOutlined />}
+                onClick={handleAdd}
+              >
+                新增用户
+              </PermissionButton>
+              {selectedRowKeys.length > 0 && (
+                <PermissionButton permission="examples:table:batchDelete" danger onClick={handleBatchDelete}>
+                  批量删除 ({selectedRowKeys.length})
+                </PermissionButton>
+              )}
+            </div>
+            <div className="table_extra_flex">
+              <PermissionButton permission="examples:table:export" icon={<ExportOutlined />} onClick={handleExport}>
+                导出
+              </PermissionButton>
+            </div>
+          </div>
+        }
+      />
+      <CustomTable
+        stripe
+        isAutoScrollY
+        {...tableProps}
+        columns={columns as any}
+        rowKey={(record) => record.id}
+        rowSelection={{
+          selectedRowKeys,
+          onChange: (keys) => {
+            setSelectedRowKeys(keys as string[])
+          },
+        }}
+      />
+      {/* 编辑/新增Modal */}
+      <Modal
+        title={EditModal.currentRecord ? '编辑用户' : '新增用户'}
+        open={EditModal.open}
+        onCancel={EditModal.closeModal}
+        footer={
+          <Space>
+            <Button onClick={EditModal.closeModal}>取消</Button>
+            <Button type="primary" onClick={handleSave} loading={EditModal.confirmLoading}>
+              确定
+            </Button>
+          </Space>
+        }
+      >
+        <EditFormVertical
+          form={EditModal.form}
+          editConfig={[
+            {
+              label: '姓名',
+              name: 'name',
+              type: 'Input',
+              placeholder: '请输入姓名',
+              rules: [
+                {
+                  required: true,
+                  message: '请输入姓名',
+                },
+              ],
+            },
+            {
+              label: '年龄',
+              name: 'age',
+              type: 'InputNumber',
+              placeholder: '请输入年龄',
+              config: {
+                min: 1,
+                max: 150,
+              },
+              rules: [
+                {
+                  required: true,
+                  message: '请输入年龄',
+                },
+              ],
+            },
+            {
+              label: '地址',
+              name: 'address',
+              type: 'Input',
+              placeholder: '请输入地址',
+              rules: [
+                {
+                  required: true,
+                  message: '请输入地址',
+                },
+              ],
+            },
+            {
+              label: '邮箱',
+              name: 'email',
+              type: 'Input',
+              placeholder: '请输入邮箱',
+              rules: [
+                {
+                  type: 'email',
+                  message: '请输入正确的邮箱格式',
+                },
+              ],
+            },
+            {
+              label: '电话',
+              name: 'phone',
+              type: 'Input',
+              placeholder: '请输入电话',
+            },
+            {
+              label: '状态',
+              name: 'status',
+              type: 'Select',
+              placeholder: '请选择状态',
+              option: [
+                { label: '启用', value: 1 },
+                { label: '禁用', value: 0 },
+              ],
+              rules: [
+                {
+                  required: true,
+                  message: '请选择状态',
+                },
+              ],
+            },
+          ]}
         />
-        <Button type="primary" icon={<PlusOutlined />}>
-          新增
-        </Button>
-      </Space>
-
-      <Table columns={columns} dataSource={data} />
-    </div>
+      </Modal>
+    </PageContainer>
   )
 }
 

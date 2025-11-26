@@ -24,6 +24,13 @@ export const ROLE_PERMISSIONS: RolePermissions = {
     'examples:table:view',
     'examples:form:view',
     'examples:charts:view',
+    'examples:table:viewinfo',
+    'examples:table:create',
+    'examples:table:edit',
+    'examples:table:delete',
+    'examples:table:status',
+    'examples:table:batchDelete',
+    'examples:table:export',
 
     // 用户管理
     'user:list:view',

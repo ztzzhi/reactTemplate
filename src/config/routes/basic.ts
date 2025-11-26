@@ -78,7 +78,16 @@ export const basicRoutes: RouteConfig[] = [
           icon: 'table',
           sort: 101,
           permissionKey: 'examples:table:view',
-          accessControlList: [{ code: 'examples:table:view', name: '查看表格示例', type: 'page' }],
+          accessControlList: [
+            { code: 'examples:table:view', name: '查看表格示例', type: 'page' },
+            { code: 'examples:table:create', name: '新增用户', type: 'operation' },
+            { code: 'examples:table:edit', name: '编辑用户', type: 'operation' },
+            { code: 'examples:table:delete', name: '删除用户', type: 'operation' },
+            { code: 'examples:table:status', name: '启用/禁用用户', type: 'operation' },
+            { code: 'examples:table:batchDelete', name: '批量删除', type: 'operation' },
+            { code: 'examples:table:export', name: '导出数据', type: 'operation' },
+            { code: 'examples:table:viewinfo', name: '查看用户', type: 'operation' },
+          ],
         },
       },
       {
