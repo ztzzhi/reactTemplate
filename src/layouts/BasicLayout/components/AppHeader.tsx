@@ -95,9 +95,9 @@ const AppHeader = () => {
 
           {/* 用户信息下拉菜单 */}
           <Dropdown menu={{ items: userMenuItems }} placement="bottomRight" arrow trigger={['click']}>
-            <div className="user-info">
+            <div className="user-info" role="button" tabIndex={0}>
               <Avatar size="small" icon={<UserOutlined />} src={userInfo?.avatar} className="user-avatar" />
-              <span className="username">{userInfo?.username}</span>
+              <span className="username">{userInfo?.username || '用户'}</span>
             </div>
           </Dropdown>
         </Space>

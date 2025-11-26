@@ -6,7 +6,7 @@ import { IEditProps } from './types'
 const grid = { xs: 24, sm: 24, md: 12, lg: 8, xl: 8, xxl: 6 }
 export default function EditFormInline(props: IEditProps) {
   return (
-    <div className={`qsf_form_edit_inline_wrap${props.className ? ' ' + props.className : ''}`}>
+    <div className={`custom_form_edit_inline_wrap${props.className ? ' ' + props.className : ''}`}>
       <Form
         form={props.form}
         labelCol={{ span: 6 }}

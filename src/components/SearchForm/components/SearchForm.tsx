@@ -79,9 +79,9 @@ export default function SearchForm(props: ISearchProps) {
         },
       }}
     >
-      <div ref={containerRef} className={`qsf_search_form_wrap${props.className ? ' ' + props.className : ''}`}>
+      <div ref={containerRef} className={`custom_search_form_wrap${props.className ? ' ' + props.className : ''}`}>
         <Form
-          className="qsf_search_form_wrap_formbox"
+          className="custom_search_form_wrap_formbox"
           form={props.form ? props.form : form}
           labelAlign="right"
           layout="inline"
@@ -120,7 +120,7 @@ export default function SearchForm(props: ISearchProps) {
             </Col>
           </Row>
         </Form>
-        <div className="qsf_search_form_extra_wrap">{props?.extra}</div>
+        <div className="custom_search_form_extra_wrap">{props?.extra}</div>
       </div>
     </ConfigProvider>
   )

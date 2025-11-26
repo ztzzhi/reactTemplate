@@ -5,7 +5,7 @@ import { IEditProps } from './types'
 import getComponents from './ComponentType'
 export default function EditFormVertical(props: IEditProps) {
   return (
-    <div className={`qsf_form_edit_wrap${props.className ? ' ' + props.className : ''}`}>
+    <div className={`custom_form_edit_wrap${props.className ? ' ' + props.className : ''}`}>
       <Form
         form={props.form}
         labelCol={{ span: 24 }}

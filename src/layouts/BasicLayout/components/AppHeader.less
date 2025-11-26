@@ -117,27 +117,38 @@
     .user-info {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       cursor: pointer;
-      padding: 0 12px;
+      padding: 6px 12px;
+      height: 40px;
+      border-radius: 8px;
+      background: transparent;
       transition: all 0.3s ease;
       color: var(--text-color);
+      user-select: none;
+      outline: none;
 
       &:hover {
         background: var(--sidebar-hover);
-        border-color: var(--border-color-split);
+        border-color: var(--sidebar-selected);
         transform: translateY(-1px);
         box-shadow: var(--shadow-2);
       }
-
       .user-avatar {
-        transition: border-color 0.3s ease;
+        transition: all 0.3s ease;
+        border: 2px solid transparent;
+        flex-shrink: 0;
       }
 
       .username {
         font-size: 14px;
         color: var(--text-color);
         font-weight: 500;
+        white-space: nowrap;
+        max-width: 120px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        transition: color 0.3s ease;
       }
     }
 

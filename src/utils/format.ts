@@ -31,3 +31,10 @@ export const formatFileSize = (bytes: number) => {
 export const formatPhone = (phone: string) => {
   return phone.replace(/(\d{3})(\d{4})(\d{4})/, '$1****$3')
 }
+
+/**
+ * vite图片处理
+ */
+export function getImageByUrl(url: string) {
+  return new URL(`../assets/images/${url}`, import.meta.url).href
+}
